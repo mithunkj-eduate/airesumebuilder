@@ -32,17 +32,29 @@ export default function App() {
 
   const previewRef = useRef(null);
 
+  // useEffect(() => {
+  //   // important showMobilePreview is bicome true bicause added refresh change screen when showMobilePreview false pdf download blank
+  //   // becase  ResumePreview above class  className={`flex-1 flex flex-col overflow-hidden bg-slate-100 ${showMobilePreview ? "flex" : "hidden"} lg:flex`}
+  //   const handleResize = () => {
+  //     // This forces the entire browser page to reload
+  //     window.location.reload();
+  //   };
+
+  //   window.addEventListener("resize", handleResize);
+
+  //   // Cleanup listener when component unmounts
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
+
   useEffect(() => {
-    // important showMobilePreview is bicome true bicause added refresh change screen when showMobilePreview false pdf download blank
-    // becase  ResumePreview above class  className={`flex-1 flex flex-col overflow-hidden bg-slate-100 ${showMobilePreview ? "flex" : "hidden"} lg:flex`}
+    // Track state change only at 1024px
+    let wasLargeScreen = window.innerWidth >= 1024;
     const handleResize = () => {
-      // This forces the entire browser page to reload
-      window.location.reload();
+      const isLargeScreen = window.innerWidth >= 1024;
+      // Only reload if breakpoint is crossed
+      if (isLargeScreen !== wasLargeScreen) window.location.reload();
     };
-
     window.addEventListener("resize", handleResize);
-
-    // Cleanup listener when component unmounts
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
