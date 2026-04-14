@@ -3,6 +3,7 @@ import { Code2, AlertCircle, Copy, Check, Send } from "lucide-react";
 import { Prompt } from "../../data/defaults";
 import { useToast } from "../../hooks/useResumeData";
 import { ToastContainer } from "../ui";
+import { cleanJsonMarkdown } from "../../utils/helper";
 
 export default function ManualJsonFlow({ onJsonChange }) {
   const [jsonText, setJsonText] = useState("");
@@ -28,9 +29,9 @@ export default function ManualJsonFlow({ onJsonChange }) {
   };
 
   const onHandleChange = (value) => {
-    setJsonText(value);
-
-    validateJSON(value);
+    const clean = cleanJsonMarkdown(value);
+    setJsonText(clean);
+    validateJSON(clean);
   };
 
   return (
@@ -103,9 +104,10 @@ export default function ManualJsonFlow({ onJsonChange }) {
 
             <button
               type="submit"
-              onClick={() =>{
+              onClick={() => {
                 showToast("✨ Resume generated!", "success");
-                onJsonChange(jsonText)}}
+                onJsonChange(jsonText);
+              }}
               className="flex items-center justify-center gap-2 px-6 py-2.5 sm:py-3 bg-blue-600 text-white text-xs sm:text-sm font-bold hover:bg-blue-700 active:scale-95 transition-all w-full sm:w-auto rounded-md shadow-md"
             >
               <Send size={14} />
