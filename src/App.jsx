@@ -47,6 +47,8 @@ export default function App() {
   // }, []);
 
   useEffect(() => {
+    // important showMobilePreview is bicome true bicause added refresh change screen when showMobilePreview false pdf download blank
+    // becase  ResumePreview above class  className={`flex-1 flex flex-col overflow-hidden bg-slate-100 ${showMobilePreview ? "flex" : "hidden"} lg:flex`}
     // Track state change only at 1024px
     let wasLargeScreen = window.innerWidth >= 1024;
     const handleResize = () => {
