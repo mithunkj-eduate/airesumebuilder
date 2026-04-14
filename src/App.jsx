@@ -123,7 +123,7 @@ export default function App() {
   const handleDownload = async () => {
     if (!previewRef.current) return;
     setDownloading(true);
-    console.log(data);
+
     try {
       const name =
         data.personal_info?.name?.replace(/\s+/g, "-").toLowerCase() ||

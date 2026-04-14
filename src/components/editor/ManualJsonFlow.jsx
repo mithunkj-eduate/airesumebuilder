@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Code2, AlertCircle, Copy, Check, Send } from "lucide-react";
 import { Prompt } from "../../data/defaults";
+import { useToast } from "../../hooks/useResumeData";
+import { ToastContainer } from "../ui";
 
 export default function ManualJsonFlow({ onJsonChange }) {
   const [jsonText, setJsonText] = useState("");
   const [jsonError, setJsonError] = useState("");
   const [copied, setCopied] = useState(false);
+  const { toasts, showToast, dismissToast } = useToast();
 
   const MASTER_PROMPT = Prompt;
 
@@ -32,6 +35,7 @@ export default function ManualJsonFlow({ onJsonChange }) {
 
   return (
     <div className="flex flex-col h-screen gap-4 p-3 sm:p-4 bg-white">
+      <ToastContainer toasts={toasts} dismiss={dismissToast} />
       {/* LEFT PANEL */}
       <div className="w-full  flex flex-col border rounded-xl overflow-hidden min-h-[300px]">
         <div className="px-3 sm:px-4 py-2 border-b bg-slate-50 text-[10px] sm:text-xs font-bold uppercase text-slate-500">
@@ -99,7 +103,9 @@ export default function ManualJsonFlow({ onJsonChange }) {
 
             <button
               type="submit"
-              onClick={() => onJsonChange(jsonText)}
+              onClick={() =>{
+                showToast("✨ Resume generated!", "success");
+                onJsonChange(jsonText)}}
               className="flex items-center justify-center gap-2 px-6 py-2.5 sm:py-3 bg-blue-600 text-white text-xs sm:text-sm font-bold hover:bg-blue-700 active:scale-95 transition-all w-full sm:w-auto rounded-md shadow-md"
             >
               <Send size={14} />
